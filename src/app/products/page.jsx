@@ -1,5 +1,6 @@
 'use client'
 
+import ProductAdminCard from "@/components/ProductAdminCard"
 import { useEffect, useState } from "react"
 
 export default function ProductsPage() {
@@ -48,27 +49,31 @@ export default function ProductsPage() {
         console.log(data)
     }
 
+
+
     return (
         <div>
             <h1>Products List</h1>
-            {
-                products.map(product => (
-                    <div key={product.id}>
-                        <p>{product.title}</p>
-                        <p>${product.price}</p>
-                    </div>
-                ))
-            }
+
 
             <div>
                 <h2>Создать товар</h2>
-                <form onSubmit={(e) => createProduct(e)}>
-                    <input value={title} onInput={(e) => setTitle(e.target.value)} type="text" placeholder="Введите название товара" />
-
-                    <input value={price} onInput={(e) => setPrice(e.target.value)} type="text" placeholder="Введите цену товара" />
-                    <button>Создать</button>
+                <form className="flex justify-center gap-x-10 mb-5" onSubmit={(e) => createProduct(e)}>
+                    <input className="px-4 py-2 border-2 border-gray-500 rounded-lg w-75" value={title} onInput={(e) => setTitle(e.target.value)} type="text" placeholder="Введите название товара" />
+                    <input className="px-4 py-2 border-2 border-gray-500 rounded-lg w-75" value={price} onInput={(e) => setPrice(e.target.value)} type="text" placeholder="Введите цену товара" />
+                    <button className="px-2 py-1 bg-purple-600 rounded-lg text-white">Создать</button>
                 </form>
             </div>
+
+            <div className="grid grid-cols-5 gap-4">
+                {
+                    products.map(product => (
+                        <ProductAdminCard product={product} key={product.id} setProducts={setProducts} />
+                    ))
+                }
+            </div>
+
+
 
         </div>
     )

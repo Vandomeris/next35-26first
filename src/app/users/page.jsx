@@ -4,9 +4,12 @@ import UsersTable from "./UsersTable"
 
 export default async function UsersPage() {
 
-    const data = await prisma.user.findMany()
+    const data = await prisma.user.findMany({
+        include: {
+            photos: true
+        }
+    })
 
-    console.log(data)
 
     return (
         <div>

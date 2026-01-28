@@ -14,6 +14,19 @@ export default function UsersTable({ data }) {
             defaultSortOrder: 'descend',
         },
         {
+            title: 'Фото профиля',
+            dataIndex: 'photo',
+            render: (_, render) => (
+                <div>
+                    {
+                        render.photos.map(img => (
+                            <img key={img.id} className="w-30" src={img.url} alt="" />
+                        ))
+                    }
+                </div>
+            )
+        },
+        {
             title: 'Email',
             dataIndex: 'email'
         },
@@ -74,6 +87,8 @@ export default function UsersTable({ data }) {
                 <input name="username" type="text" placeholder="Username" />
                 <input name="age" type="text" placeholder="Age" />
                 <input name="password" type="text" placeholder="Password" />
+
+                <input name="image" type="file" multiple />
                 <Button htmlType="submit" variant="solid" color="magenta">Создать пользователя</Button>
             </form>
 

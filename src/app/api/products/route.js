@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma"
+import { message } from "antd"
 
 export async function GET() {
 
@@ -51,6 +52,11 @@ export async function PUT(request) {
         }
     })
 
+    if (body.tel.length < 100) {
+        return Response.json({
+            message: 'В поле телефон доступны только цифры'
+        })
+    }
     return Response.json(updatedProduct)
 
 }

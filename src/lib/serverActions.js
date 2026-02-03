@@ -5,7 +5,8 @@ import { prisma } from "./prisma"
 import { writeFile } from "node:fs/promises"
 import { join } from "node:path"
 import z from "zod"
-import { message } from "antd"
+import { hash } from "bcryptjs"
+import { redirect } from "next/navigation"
 
 export async function createUser(initialState, formData) {
 
@@ -104,5 +105,24 @@ export async function updateUser(user) {
     })
 
     revalidatePath('/users')
+
+}
+
+
+
+export async function registerUser(formData) {
+
+    const user = await prisma.user.create({
+        data: {
+            username: formData.get('username'),
+            email: formData.get('email'),
+            age: Number(formData.get('age')),
+            password: await hash(formData.get('password'), 10)
+        }
+    })
+
+    if (user) {
+        redirect('/api/auth/signin')
+    }
 
 }
